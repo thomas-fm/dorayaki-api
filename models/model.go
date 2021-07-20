@@ -7,8 +7,8 @@ import (
 // Table of dorayaki stock from each store
 type Stock struct {
 	gorm.Model
-	StoreID   uint64  `gorm:"primary_key;autoIncrement:true"`
-	VariantID uint64  `gorm:"primary_key"`
+	StoreID   uint64  `gorm:"primary_keyconstraint:onUpdate:CASCADE,onDelete:CASCADE"`
+	VariantID uint64  `gorm:"primary_keyconstraint:onUpdate:CASCADE,onDelete:CASCADE"`
 	Store     Store   `gorm:"foreignKey:StoreID"`
 	Variant   Variant `gorm:"foreignKey:VariantID"`
 	Total     uint64
