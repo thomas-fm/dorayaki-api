@@ -7,7 +7,7 @@ import (
 // Table of dorayaki stock from each store
 type Stock struct {
 	gorm.Model
-	StoreID   uint64  `gorm:"primary_key"`
+	StoreID   uint64  `gorm:"primary_key;autoIncrement:true"`
 	VariantID uint64  `gorm:"primary_key"`
 	Store     Store   `gorm:"foreignKey:StoreID"`
 	Variant   Variant `gorm:"foreignKey:VariantID"`
@@ -26,12 +26,12 @@ type Variant struct {
 // Table of dorayaki store
 type Store struct {
 	gorm.Model
-	ID           uint64 `gorm:"primaryKey;autoIncrement:true"`
-	Name         string
-	Street       string
-	District     string
-	Province     string
-	Phone_Number string
+	ID           uint64 `gorm:"primaryKey;autoIncrement:true" json:"id"`
+	Name         string `gorm:"type:varchar(255)" json:"name"`
+	Street       string `gorm:"type:text" json:"street"`
+	District     string `gorm:"type:varchar(255)" json:"district"`
+	Province     string `gorm:"type:varchar(255)" json:"province"`
+	Phone_Number string `gorm:"type:varchar(255)" json:"phone_number"`
 }
 
 // Table of user

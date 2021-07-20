@@ -14,7 +14,7 @@ import (
 )
 
 //BookController is a ...
-type VariantController interface {
+type StoreController interface {
 	All(context *gin.Context)
 	Insert(context *gin.Context)
 	Update(context *gin.Context)
@@ -22,26 +22,37 @@ type VariantController interface {
 	FindByID(context *gin.Context)
 }
 
-type variantController struct {
-	variantService service.VariantService
+type storeController struct {
+	storeService service.StoreService
 }
 
 //NewBookController create a new instances of BoookController
-func NewVariantController(varService service.VariantService) VariantController {
-	return &variantController{
-		variantService: varService,
+func NewStoreController(varService service.StoreService) StoreController {
+	return &storeController{
+		storeService: varService,
 	}
 }
 
 // GET
-func (v *variantController) All(context *gin.Context) {
-	var variants []models.Variant = v.variantService.Read()
-	res := utils.BuildResponse(true, "OK", variants)
-	context.JSON(http.StatusOK, res)
+func (s *storeController) All(context *gin.Context) {
+	// handle get with filter
+	var storeFilterDTO dtos.StoreFilterDTO
+	errDTO := context.ShouldBind(&storeFilterDTO)
+
+	if errDTO != nil {
+		var stores []models.Store = s.storeService.Read()
+		res := utils.BuildResponse(true, "OK", stores)
+		context.JSON(http.StatusOK, res)
+	} else {
+		var stores []models.Store = s.storeService.Filter(storeFilterDTO)
+		res := utils.BuildResponse(true, "OK", stores)
+		context.JSON(http.StatusOK, res)
+	}
+
 }
 
 // get by id
-func (v *variantController) FindByID(context *gin.Context) {
+func (s *storeController) FindByID(context *gin.Context) {
 	id, err := strconv.ParseUint(context.Param("id"), 0, 0)
 	if err != nil {
 		res := utils.BuildErrorResponse("No id was found", err.Error(), utils.EmptyObj{})
@@ -49,53 +60,53 @@ func (v *variantController) FindByID(context *gin.Context) {
 		return
 	}
 
-	var variant models.Variant = v.variantService.ReadByID(id)
-	if (variant == models.Variant{}) {
+	var store models.Store = s.storeService.ReadByID(id)
+	if (store == models.Store{}) {
 		res := utils.BuildErrorResponse("Data not found", "No data with given id", utils.EmptyObj{})
 		context.JSON(http.StatusNotFound, res)
 	} else {
-		res := utils.BuildResponse(true, "Success", variant)
+		res := utils.BuildResponse(true, "Success", store)
 		context.JSON(http.StatusOK, res)
 	}
 }
 
-func (v *variantController) Insert(context *gin.Context) {
-	var variantCreateDTO dtos.VariantCreateDTO
-	errDTO := context.ShouldBind(&variantCreateDTO)
+func (s *storeController) Insert(context *gin.Context) {
+	var storeCreateDTO dtos.StoreCreateDTO
+	errDTO := context.ShouldBind(&storeCreateDTO)
 	if errDTO != nil {
 		res := utils.BuildErrorResponse("Failed to process request", errDTO.Error(), utils.EmptyObj{})
 		context.JSON(http.StatusBadRequest, res)
 	} else {
-		result := v.variantService.Create(variantCreateDTO)
+		result := s.storeService.Create(storeCreateDTO)
 		response := utils.BuildResponse(true, "Success", result)
 		context.JSON(http.StatusCreated, response)
 	}
 }
 
-func (v *variantController) Update(context *gin.Context) {
-	var variantUpdateDTO dtos.VariantUpdateDTO
-	errDTO := context.ShouldBind(&variantUpdateDTO)
+func (s *storeController) Update(context *gin.Context) {
+	var storeUpdateDTO dtos.StoreUpdateDTO
+	errDTO := context.ShouldBind(&storeUpdateDTO)
 	if errDTO != nil {
 		res := utils.BuildErrorResponse("Failed to process request", errDTO.Error(), utils.EmptyObj{})
 		context.JSON(http.StatusBadRequest, res)
 		return
 	}
 
-	result := v.variantService.Update(variantUpdateDTO)
+	result := s.storeService.Update(storeUpdateDTO)
 	response := utils.BuildResponse(true, "Success", result)
 	context.JSON(http.StatusOK, response)
 }
 
-func (v *variantController) Delete(context *gin.Context) {
-	var variant models.Variant
+func (s *storeController) Delete(context *gin.Context) {
+	var store models.Store
 	id, err := strconv.ParseUint(context.Param("id"), 0, 0)
 	if err != nil {
 		response := utils.BuildErrorResponse("Failed to get id", "No param id were found", utils.EmptyObj{})
 		context.JSON(http.StatusBadRequest, response)
 	}
-	variant.ID = id
+	store.ID = id
 
-	v.variantService.Delete(variant)
+	s.storeService.Delete(store)
 	res := utils.BuildResponse(true, "Deleted", utils.EmptyObj{})
 	context.JSON(http.StatusOK, res)
 }

@@ -7,11 +7,11 @@ import (
 )
 
 type VariantRepository interface {
-	InsertVariant(v models.Variant) models.Variant
+	CreateVariant(v models.Variant) models.Variant
 	UpdateVariant(v models.Variant) models.Variant
 	DeleteVariant(v models.Variant)
-	AllVariants() []models.Variant
-	FindVariantbyID(IDVariant uint64) models.Variant
+	ReadVariants() []models.Variant
+	ReadVariantbyID(IDVariant uint64) models.Variant
 }
 
 type variantConnection struct {
@@ -25,14 +25,14 @@ func NewVariantRepository(dbConn *gorm.DB) VariantRepository {
 }
 
 // CREATE
-func (db *variantConnection) InsertVariant(v models.Variant) models.Variant {
+func (db *variantConnection) CreateVariant(v models.Variant) models.Variant {
 	db.connection.Save(&v)
 	db.connection.Find(&v)
 	return v
 }
 
 // READ
-func (db *variantConnection) AllVariants() []models.Variant {
+func (db *variantConnection) ReadVariants() []models.Variant {
 	var variants []models.Variant
 	db.connection.Find(&variants)
 
@@ -52,7 +52,7 @@ func (db *variantConnection) DeleteVariant(v models.Variant) {
 }
 
 // find by id
-func (db *variantConnection) FindVariantbyID(IDVariant uint64) models.Variant {
+func (db *variantConnection) ReadVariantbyID(IDVariant uint64) models.Variant {
 	var variant models.Variant
 	db.connection.Find(&variant, IDVariant)
 	return variant

@@ -7,17 +7,17 @@ import (
 	"github.com/thomas-fm/dorayaki-api/models"
 	"github.com/thomas-fm/dorayaki-api/repository"
 
-	"github.com/mashingan/smapping"
+	"github.com/jinzhu/copier"
 )
 
 //BookService is a ....
 type VariantService interface {
-	Insert(v dtos.VariantCreateDTO) models.Variant
+	Create(v dtos.VariantCreateDTO) models.Variant
 	Update(v dtos.VariantUpdateDTO) models.Variant
 	Delete(v models.Variant)
-	All() []models.Variant
-	FindByID(IDVariant uint64) models.Variant
-	// IsAllowedToEdit(userID string, bookID uint64) bool
+	Read() []models.Variant
+	ReadByID(IDVariant uint64) models.Variant
+	// IsReadowedToEdit(userID string, bookID uint64) bool
 }
 
 type variantService struct {
@@ -31,21 +31,21 @@ func NewVariantService(varRepo repository.VariantRepository) VariantService {
 	}
 }
 
-func (service *variantService) Insert(v dtos.VariantCreateDTO) models.Variant {
+func (service *variantService) Create(v dtos.VariantCreateDTO) models.Variant {
 	variant := models.Variant{}
-	err := smapping.FillStruct(&variant, smapping.MapFields(&v))
+	err := copier.Copy(&variant, &v)
 	if err != nil {
-		log.Fatalf("Failed map %v: ", err)
+		log.Fatalf("Failed copy %v: ", err)
 	}
-	res := service.variantRepository.InsertVariant(variant)
+	res := service.variantRepository.CreateVariant(variant)
 	return res
 }
 
 func (service *variantService) Update(v dtos.VariantUpdateDTO) models.Variant {
 	variant := models.Variant{}
-	err := smapping.FillStruct(&variant, smapping.MapFields(&v))
+	err := copier.Copy(&variant, &v)
 	if err != nil {
-		log.Fatalf("Failed map %v: ", err)
+		log.Fatalf("Failed copy %v: ", err)
 	}
 	res := service.variantRepository.UpdateVariant(variant)
 	return res
@@ -55,10 +55,10 @@ func (service *variantService) Delete(v models.Variant) {
 	service.variantRepository.DeleteVariant(v)
 }
 
-func (service *variantService) All() []models.Variant {
-	return service.variantRepository.AllVariants()
+func (service *variantService) Read() []models.Variant {
+	return service.variantRepository.ReadVariants()
 }
 
-func (service *variantService) FindByID(IDVariant uint64) models.Variant {
-	return service.variantRepository.FindVariantbyID(IDVariant)
+func (service *variantService) ReadByID(IDVariant uint64) models.Variant {
+	return service.variantRepository.ReadVariantbyID(IDVariant)
 }
