@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/thomas-fm/dorayaki-api/models"
+	"dorayaki-api/models"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/joho/godotenv"
@@ -42,7 +42,7 @@ func SetupDB() (db *gorm.DB) {
 		fmt.Println("We are getting the env values")
 	}
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s?charset=utf8&parseTime=True&loc=Local", dbUser, dbPass, dbHost, dbName)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306/%s?charset=utf8&parseTime=True&loc=Local", dbUser, dbPass, dbHost, dbName)
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to create a connection to database")

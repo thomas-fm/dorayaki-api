@@ -3,9 +3,9 @@ package service
 import (
 	"log"
 
-	"github.com/thomas-fm/dorayaki-api/dtos"
-	"github.com/thomas-fm/dorayaki-api/models"
-	"github.com/thomas-fm/dorayaki-api/repository"
+	"dorayaki-api/dtos"
+	"dorayaki-api/models"
+	"dorayaki-api/repository"
 
 	"github.com/jinzhu/copier"
 )

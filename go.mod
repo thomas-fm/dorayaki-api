@@ -1,4 +1,4 @@
-module github.com/thomas-fm/dorayaki-api
+module dorayaki-api
 
 go 1.16
 

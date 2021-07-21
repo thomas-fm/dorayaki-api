@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/thomas-fm/dorayaki-api/models"
+	"dorayaki-api/models"
 
 	"gorm.io/gorm"
 )

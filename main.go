@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/thomas-fm/dorayaki-api/config"
-	"github.com/thomas-fm/dorayaki-api/controller"
-	"github.com/thomas-fm/dorayaki-api/repository"
-	"github.com/thomas-fm/dorayaki-api/service"
+	"dorayaki-api/config"
+	"dorayaki-api/controller"
+	"dorayaki-api/repository"
+	"dorayaki-api/service"
 
 	// "fmt"
 
@@ -34,6 +34,17 @@ func main() {
 	defer config.CloseDatabaseConnection(db)
 	r := gin.Default()
 
+	/*
+		stockRoutes := r.Group("api/stocks")
+		{
+			stockRoutes.GET("/:storeID")
+			stockRoutes.GET("/:storeID/variant/:variantID")
+			stockRoutes.POST("/:storeID/variant/:variantID")
+			stockRoutes.POST("/:storeID")
+			stockRoutes.PUT("/:storeID/variant/:variantID")
+			stockRoutes.DELETE("/:storeID/variant/:variantID")
+		}
+	*/
 	storeRoutes := r.Group("api/stores")
 	{
 		storeRoutes.GET("/", storeController.All)

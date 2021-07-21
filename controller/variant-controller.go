@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/thomas-fm/dorayaki-api/service"
+	"dorayaki-api/service"
 
-	"github.com/thomas-fm/dorayaki-api/dtos"
-	"github.com/thomas-fm/dorayaki-api/models"
-	"github.com/thomas-fm/dorayaki-api/utils"
+	"dorayaki-api/dtos"
+	"dorayaki-api/models"
+	"dorayaki-api/utils"
 
 	"github.com/gin-gonic/gin"
 )
