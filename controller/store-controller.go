@@ -13,7 +13,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//BookController is a ...
 type StoreController interface {
 	All(context *gin.Context)
 	Insert(context *gin.Context)

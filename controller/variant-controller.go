@@ -13,7 +13,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//BookController is a ...
 type VariantController interface {
 	All(context *gin.Context)
 	Insert(context *gin.Context)
@@ -26,7 +25,6 @@ type variantController struct {
 	variantService service.VariantService
 }
 
-//NewBookController create a new instances of BoookController
 func NewVariantController(varService service.VariantService) VariantController {
 	return &variantController{
 		variantService: varService,
