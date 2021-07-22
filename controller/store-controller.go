@@ -25,7 +25,6 @@ type storeController struct {
 	storeService service.StoreService
 }
 
-//NewBookController create a new instances of BoookController
 func NewStoreController(varService service.StoreService) StoreController {
 	return &storeController{
 		storeService: varService,

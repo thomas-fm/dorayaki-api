@@ -20,31 +20,32 @@ var (
 	// repository
 	variantRepository repository.VariantRepository = repository.NewVariantRepository(db)
 	storeRepository   repository.StoreRepository   = repository.NewStoreRepository(db)
+	stockRepository   repository.StockRepository   = repository.NewStockRepository(db)
 
 	// service
 	variantService service.VariantService = service.NewVariantService(variantRepository)
 	storeService   service.StoreService   = service.NewStoreService(storeRepository)
+	stockService   service.StockService   = service.NewStockService(stockRepository)
 
 	// controller
 	variantController controller.VariantController = controller.NewVariantController(variantService)
 	storeController   controller.StoreController   = controller.NewStoreController(storeService)
+	stockController   controller.StockController   = controller.NewStockController(stockService)
 )
 
 func main() {
-	defer config.CloseDatabaseConnection(db)
 	r := gin.Default()
 
-	/*
-		stockRoutes := r.Group("api/stocks")
-		{
-			stockRoutes.GET("/:storeID")
-			stockRoutes.GET("/:storeID/variant/:variantID")
-			stockRoutes.POST("/:storeID/variant/:variantID")
-			stockRoutes.POST("/:storeID")
-			stockRoutes.PUT("/:storeID/variant/:variantID")
-			stockRoutes.DELETE("/:storeID/variant/:variantID")
-		}
-	*/
+	stockRoutes := r.Group("api/stocks")
+	{
+		stockRoutes.GET("/:storeID", stockController.All)
+		stockRoutes.GET("/:storeID/variant/:variantID", stockController.FindByVariantID)
+		// stockRoutes.POST("/:storeID/variant/:variantID")
+		stockRoutes.POST("/:storeID", stockController.Insert)
+		stockRoutes.PUT("/:storeID/variant/:variantID", stockController.Update)
+		stockRoutes.DELETE("/:storeID/variant/:variantID", stockController.Delete)
+	}
+
 	storeRoutes := r.Group("api/stores")
 	{
 		storeRoutes.GET("/", storeController.All)
@@ -62,5 +63,6 @@ func main() {
 		variantRoutes.DELETE("/:id", variantController.Delete)
 	}
 
+	defer config.CloseDatabaseConnection(db)
 	r.Run()
 }

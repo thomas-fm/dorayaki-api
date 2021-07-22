@@ -7,34 +7,29 @@ import (
 )
 
 type StockRepository interface {
-	// CreateStock(v models.Stock) models.Stock
-	// UpdateStock(v models.Stock) models.Stock
-	// DeleteStock(v models.Stock)
-	// ReadStocks() []models.Stock
-	// ReadStockbyID(IDStock uint64) models.Stock
-	DeleteStock(v models.Stock)
+	DeleteStock(s models.Stock)
 	UpdateStock(s models.Stock) models.Stock
 	CreateStock(s models.Stock) models.Stock
 	ReadStock(store_id uint64) (stocks []models.Stock)
-	ReadStockByVid(store_id uint64, var_id uint64) (stock models.Stock)
+	ReadStockByVid(store_id uint64, variant_id uint64) (stock models.Stock)
 }
 
 type stockConnection struct {
 	connection *gorm.DB
 }
 
-// func NewStockRepository(dbConn *gorm.DB) StockRepository {
-// 	return &stockConnection{
-// 		connection: dbConn,
-// 	}
-// }
-func (db *stockConnection) ReadStock(s models.Stock) (stocks []models.Stock) {
-	db.connection.Where("store_id = ?", s.StoreID).Find(&stocks)
+func NewStockRepository(dbConn *gorm.DB) StockRepository {
+	return &stockConnection{
+		connection: dbConn,
+	}
+}
+func (db *stockConnection) ReadStock(store_id uint64) (stocks []models.Stock) {
+	db.connection.Where("store_id = ?", store_id).Find(&stocks)
 	return stocks
 }
 
-func (db *stockConnection) ReadStockByVid(s models.Stock) (stock models.Stock) {
-	db.connection.Find(&stock)
+func (db *stockConnection) ReadStockByVid(store_id uint64, variant_id uint64) (stock models.Stock) {
+	db.connection.Where("store_id = ?", store_id).Find(&stock)
 	return stock
 }
 
