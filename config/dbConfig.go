@@ -25,16 +25,20 @@ var (
 	dbPass string
 	dbHost string
 	dbName string
+	dbPort string
 )
 
 func SetupDB() (db *gorm.DB) {
 	var err error
 	err = godotenv.Load()
 
-	dbUser = os.Getenv("DBUser")
-	dbPass = os.Getenv("DBPass")
-	dbHost = os.Getenv("DBHost")
-	dbName = os.Getenv("DBName")
+	dbUser = os.Getenv("DB_USER")
+	dbPass = os.Getenv("DB_PASSWORD")
+	dbHost = os.Getenv("DB_HOST")
+	dbName = os.Getenv("DB_NAME")
+	dbPort = os.Getenv("DB_PORT")
+
+	// dbHost = "'%'"
 
 	if err != nil {
 		log.Fatalf("Error getting env, %v", err)
@@ -42,10 +46,10 @@ func SetupDB() (db *gorm.DB) {
 		fmt.Println("We are getting the env values")
 	}
 
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:3306/%s?charset=utf8&parseTime=True&loc=Local", dbUser, dbPass, dbHost, dbName)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8&parseTime=True&loc=Local", dbUser, dbPass, dbHost, dbPort, dbName)
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
-		panic("Failed to create a connection to database")
+		panic("Failed to create a connection to database oo")
 	}
 
 	// migrate models to database

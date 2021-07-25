@@ -12,7 +12,9 @@ import (
 
 //BookService is a ....
 type StockService interface {
-	Create(s []dtos.StockSingleCreate) []models.Stock
+	// Create(s []dtos.StockSingleCreate) []models.Stock
+	Create(s dtos.StockSingleCreate) models.Stock
+
 	Update(s dtos.StockSingleUpdate) models.Stock
 	Delete(s models.Stock)
 	Read(store_id uint64) []models.Stock
@@ -29,16 +31,27 @@ func NewStockService(stockRepo repository.StockRepository) StockService {
 	}
 }
 
-func (service *stockService) Create(stocksDTO []dtos.StockSingleCreate) []models.Stock {
-	var stocks []models.Stock
+// func (service *stockService) Create(stocksDTO []dtos.StockSingleCreate) []models.Stock {
+// 	var stocks []models.Stock
+// 	err := copier.Copy(&stocks, &stocksDTO)
+// 	if err != nil {
+// 		log.Fatalf("Failed copy %v: ", err)
+// 	}
+// 	for _, stock := range stocks {
+// 		service.stockRepository.CreateStock(stock)
+// 	}
+// 	return stocks
+// }
+
+func (service *stockService) Create(stocksDTO dtos.StockSingleCreate) models.Stock {
+	var stocks models.Stock
 	err := copier.Copy(&stocks, &stocksDTO)
 	if err != nil {
 		log.Fatalf("Failed copy %v: ", err)
 	}
-	for _, stock := range stocks {
-		service.stockRepository.CreateStock(stock)
-	}
-	return stocks
+	res := service.stockRepository.CreateStock(stocks)
+
+	return res
 }
 
 func (service *stockService) Update(s dtos.StockSingleUpdate) models.Stock {

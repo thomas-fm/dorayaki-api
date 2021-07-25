@@ -1,21 +1,16 @@
 package models
 
-import (
-	"gorm.io/gorm"
-)
-
 // Table of dorayaki stock from each store
 type Stock struct {
-	StoreID   uint64  `gorm:"primaryKey;autoIncrement:false" json:"store_id"`
-	VariantID uint64  `gorm:"primaryKey;autoIncrement:false" json:"variant_id"`
-	Store     Store   `gorm:"foreignKey:StoreID;constraint:OnDelete:CASCADE,OnUpdate:CASCADE"`
-	Variant   Variant `gorm:"foreignKey:VariantID;constraint:OnDelete:CASCADE,OnUpdate:CASCADE"`
-	Total     uint64  `gorm:"type:number" json:"total"`
+	StoreID   uint64  `gorm:"primaryKey;autoIncrement:false;constraint:OnDelete:CASCADE,OnUpdate:CASCADE" json:"store_id"`
+	VariantID uint64  `gorm:"primaryKey;autoIncrement:false;constraint:OnDelete:CASCADE,OnUpdate:CASCADE" json:"variant_id"`
+	Store     Store   `gorm:"foreignKey:StoreID;References:ID"`
+	Variant   Variant `gorm:"foreignKey:VariantID;References:ID"`
+	Total     uint64  `json:"total"`
 }
 
 // Dorayaki variant table
 type Variant struct {
-	gorm.Model
 	ID          uint64 `gorm:"primary_key;autoIncrement:true" json:"id"`
 	Flavour     string `gorm:"type:varchar(255)" json:"flavour"`
 	Description string `gorm:"type:text" json:"description"`
@@ -24,13 +19,12 @@ type Variant struct {
 
 // Table of dorayaki store
 type Store struct {
-	gorm.Model
-	ID           uint64 `gorm:"primaryKey;autoIncrement:true" json:"id"`
-	Name         string `gorm:"type:varchar(255)" json:"name"`
-	Street       string `gorm:"type:text" json:"street"`
-	District     string `gorm:"type:varchar(255)" json:"district"`
-	Province     string `gorm:"type:varchar(255)" json:"province"`
-	Phone_Number string `gorm:"type:varchar(255)" json:"phone_number"`
+	ID       uint64 `gorm:"primaryKey;autoIncrement:true" json:"id"`
+	Name     string `gorm:"type:varchar(255)" json:"name"`
+	Street   string `gorm:"type:text" json:"street"`
+	District string `gorm:"type:varchar(255)" json:"district"`
+	Province string `gorm:"type:varchar(255)" json:"province"`
+	// Phone_Number string `gorm:"type:varchar(255)" json:"phone_number"`
 }
 
 // Table of user

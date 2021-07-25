@@ -1,5 +1,7 @@
 FROM golang:alpine AS builder
 
+LABEL maintainer="Thomas Ferdinand"
+
 RUN apk update && apk add --no-cache git
 
 WORKDIR /app

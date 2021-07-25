@@ -76,11 +76,14 @@ func (s *stockController) FindByVariantID(c *gin.Context) {
 }
 
 func (s *stockController) Insert(c *gin.Context) {
-	var stockCreateDTO []dtos.StockSingleCreate
+	// var stockCreateDTO []dtos.StockSingleCreate
+	var stockCreateDTO dtos.StockSingleCreate
+
 	errDTO := c.ShouldBind(&stockCreateDTO)
 	if errDTO != nil {
 		res := utils.BuildErrorResponse("Failed to process request", errDTO.Error(), utils.EmptyObj{})
 		c.AbortWithStatusJSON(http.StatusBadRequest, res)
+		return
 	}
 
 	result := s.stockService.Create(stockCreateDTO)
@@ -94,6 +97,7 @@ func (s *stockController) Update(c *gin.Context) {
 	if errDTO != nil {
 		res := utils.BuildErrorResponse("Failed to process request", errDTO.Error(), utils.EmptyObj{})
 		c.AbortWithStatusJSON(http.StatusBadRequest, res)
+		return
 	}
 
 	result := s.stockService.Update(stockUpdateDTO)
