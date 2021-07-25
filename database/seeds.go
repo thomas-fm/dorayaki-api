@@ -2,6 +2,7 @@ package database
 
 import (
 	"encoding/csv"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
@@ -12,9 +13,9 @@ import (
 )
 
 const (
-	VARIANTS_FILE string = "./seed/variants.csv"
-	STORES_FILE   string = "./seed/stores.csv"
-	STOCKS_FILE   string = "./seed/stocks.csv"
+	VARIANTS_FILE string = "database/variants.csv"
+	STORES_FILE   string = "database/stores.csv"
+	STOCKS_FILE   string = "database/stocks.csv"
 )
 
 var (
@@ -29,6 +30,9 @@ func Seed(db *gorm.DB) {
 	stockSeed, err3 := readCSV(STOCKS_FILE)
 
 	if err1 != nil || err2 != nil || err3 != nil {
+		fmt.Println(err1.Error())
+		fmt.Println(err2.Error())
+		fmt.Println(err3.Error())
 		log.Fatal("couldnt read file")
 	}
 

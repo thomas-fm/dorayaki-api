@@ -3,12 +3,15 @@ package main
 import (
 	"dorayaki-api/config"
 	"dorayaki-api/controller"
+	"dorayaki-api/database"
 	"dorayaki-api/repository"
 	"dorayaki-api/service"
 
 	// "fmt"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+
 	// "net/http"
 	"gorm.io/gorm"
 )
@@ -34,7 +37,10 @@ var (
 )
 
 func main() {
+	// Seeding
+	database.Seed(db)
 	r := gin.Default()
+	r.Use(cors.Default())
 
 	stockRoutes := r.Group("api/stocks")
 	{
