@@ -1,6 +1,8 @@
 # SeleksiLabpro-Backend
-
-# REST API
+# Sistem
+1. Golang (backend)
+2. MYSQL (database)
+# Endpoint
 **Variant**
 ----
 
@@ -77,13 +79,13 @@
   `/stocks/:id/variant/:id`
 
 # Cara menjalankan aplikasi
-1. Pastikan terinstall golang versi > 1.16 dan docker versi > 20
+1. Pastikan terinstall docker versi > 20
 2. Pastikan port `3306` tidak terpakai
-3. Jalankan perintah berikut<br />
+3. Jalankan perintah berikut
 ```
-  git clone https://github.com/thomas-fm/dorayaki-api.git
-	cd dorayaki-api
-	docker-compose up --build
+git clone https://github.com/thomas-fm/dorayaki-api.git
+cd dorayaki-api
+docker-compose up --build
 ```
 4. API akan berjalan pada `localhost:8080/api`
 
