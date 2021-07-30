@@ -2,10 +2,10 @@ package models
 
 // Table of dorayaki stock from each store
 type Stock struct {
-	StoreID   uint64  `gorm:"primaryKey;autoIncrement:false;constraint:OnDelete:CASCADE,OnUpdate:CASCADE" json:"store_id"`
-	VariantID uint64  `gorm:"primaryKey;autoIncrement:false;constraint:OnDelete:CASCADE,OnUpdate:CASCADE" json:"variant_id"`
-	Store     Store   `gorm:"foreignKey:StoreID;References:ID"`
-	Variant   Variant `gorm:"foreignKey:VariantID;References:ID"`
+	StoreID   uint64  `gorm:"primaryKey;" json:"store_id"`
+	VariantID uint64  `gorm:"primaryKey;" json:"variant_id"`
+	Store     Store   `gorm:"foreignKey:StoreID;References:ID;constraint:OnDelete:CASCADE,OnUpdate:CASCADE"`
+	Variant   Variant `gorm:"foreignKey:VariantID;References:ID;constraint:OnDelete:CASCADE,OnUpdate:CASCADE"`
 	Total     uint64  `json:"total"`
 }
 

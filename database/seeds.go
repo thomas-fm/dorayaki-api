@@ -1,11 +1,11 @@
 package database
 
 import (
-	"encoding/csv"
-	"fmt"
-	"log"
-	"os"
-	"strconv"
+	// "encoding/csv"
+	// "fmt"
+	// "log"
+	// "os"
+	// "strconv"
 
 	"dorayaki-api/models"
 
@@ -19,84 +19,111 @@ const (
 )
 
 var (
-	variants []models.Variant
-	stores   []models.Store
-	stocks   []models.Stock
+	variants = []models.Variant{
+		{
+			Flavour:     "Nasi Padang",
+			Description: "Dorayaki dengan cita rasa Indonesia",
+			IMG_URL:     "https://res.cloudinary.com/stand-with-dorayaki/image/upload/v1627609112/download_1_jelwoz.jpg",
+		},
+		{
+			Flavour:     "Ayam Geprek",
+			Description: "Dorayaki dengan kombinasi ayam dan sambal geprek pedas kesukaan kita semua",
+			IMG_URL:     "https://res.cloudinary.com/stand-with-dorayaki/image/upload/v1627609111/5f13dd959ae40_gj0c6m.jpg",
+		},
+		{
+			Flavour:     "Nutella",
+			Description: "Dorayaki yang dipadukan dengan nutella sebagai isian yang rasanya pasti maknyus",
+			IMG_URL:     "https://res.cloudinary.com/stand-with-dorayaki/image/upload/v1627609110/images_rgvhmj.jpg",
+		},
+		{
+			Flavour:     "Brown Sugar",
+			Description: "Dorayaki dengan rasa brown sugar, memiliki kelezatan luar biasa",
+			IMG_URL:     "https://res.cloudinary.com/stand-with-dorayaki/image/upload/v1627610897/dorayaki-hiroshi-yoshinaga-cc_txsgb5.jpg",
+		},
+	}
+	stores = []models.Store{
+		{
+			Name:     "Dorayakee",
+			Street:   "Jalan Mawar Nomor 10",
+			District: "Coblong",
+			Province: "Jawa Barat",
+		},
+		{
+			Name:     "Dorayankee",
+			Street:   "Jalan Melati Nomor 1",
+			District: "Kiara Condong",
+			Province: "Jawa Barat",
+		},
+		{
+			Name:     "Doray",
+			Street:   "Jalan Anggrek Nomor 13",
+			District: "Coblong",
+			Province: "Jawa Barat",
+		},
+		{
+			Name:     "Doryaks",
+			Street:   "Jalan Tulip Nomor 2",
+			District: "Coblong",
+			Province: "Jawa Barat",
+		},
+		{
+			Name:     "Doryaks",
+			Street:   "Jalan Matahari Nomor 3",
+			District: "Antapani",
+			Province: "Jawa Barat",
+		},
+	}
+	stocks = []models.Stock{
+		{
+			StoreID:   1,
+			VariantID: 1,
+			Total:     100,
+		},
+		{
+			StoreID:   1,
+			VariantID: 2,
+			Total:     300,
+		},
+		{
+			StoreID:   1,
+			VariantID: 3,
+			Total:     600,
+		},
+		{
+			StoreID:   2,
+			VariantID: 1,
+			Total:     150,
+		},
+		{
+			StoreID:   3,
+			VariantID: 1,
+			Total:     250,
+		},
+		{
+			StoreID:   4,
+			VariantID: 3,
+			Total:     356,
+		},
+		{
+			StoreID:   5,
+			VariantID: 2,
+			Total:     124,
+		},
+	}
 )
 
 func Seed(db *gorm.DB) {
-	variantSeed, err1 := readCSV(VARIANTS_FILE)
-	storeSeed, err2 := readCSV(STORES_FILE)
-	stockSeed, err3 := readCSV(STOCKS_FILE)
-
-	if err1 != nil || err2 != nil || err3 != nil {
-		fmt.Println(err1.Error())
-		fmt.Println(err2.Error())
-		fmt.Println(err3.Error())
-		log.Fatal("couldnt read file")
-	}
-
-	// Insert into batch
-	// Variants seed
-	for _, line := range variantSeed {
-		data := models.Variant{
-			Flavour:     line[0],
-			Description: line[1],
-			IMG_URL:     line[2],
-		}
-
-		variants = append(variants, data)
-	}
-	// Store seed
-	for _, line := range storeSeed {
-		data := models.Store{
-			Name:     line[0],
-			Street:   line[1],
-			District: line[2],
-			Province: line[3],
-			// Phone_Number: line[4],
-		}
-
-		stores = append(stores, data)
-	}
-	// Stock seed
-	for _, line := range stockSeed {
-		s, err := strconv.ParseUint(line[0], 10, 64)
-		v, err := strconv.ParseUint(line[1], 10, 64)
-		t, err := strconv.ParseUint(line[2], 10, 64)
-
-		if err != nil {
-			log.Fatal("cannot read file")
-		}
-		data := models.Stock{
-			StoreID:   s,
-			VariantID: v,
-			Total:     t,
-		}
-		stocks = append(stocks, data)
-	}
-
 	// Insert to db
-	db.Create(&variants)
-	db.Create(&stores)
-	db.Create(&stocks)
-}
+	var tokos []models.Store
+	db.Find(&tokos)
+	var dorayakis []models.Variant
+	db.Find(&dorayakis)
+	var quantity []models.Stock
+	db.Find(&quantity)
 
-// read csv file return as 2d array
-func readCSV(filename string) ([][]string, error) {
-	f, err := os.Open(filename)
-
-	if err != nil {
-		return [][]string{}, err
+	if len(tokos) == 0 && len(dorayakis) == 0 && len(quantity) == 0 {
+		db.Create(&variants)
+		db.Create(&stores)
+		db.Create(&stocks)
 	}
-
-	defer f.Close()
-
-	lines, err := csv.NewReader(f).ReadAll()
-
-	if err != nil {
-		return [][]string{}, err
-	}
-
-	return lines, nil
 }

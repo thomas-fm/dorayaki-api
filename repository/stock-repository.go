@@ -29,7 +29,7 @@ func (db *stockConnection) ReadStock(store_id uint64) (stocks []models.Stock) {
 }
 
 func (db *stockConnection) ReadStockByVid(store_id uint64, variant_id uint64) (stock models.Stock) {
-	db.connection.Where("store_id = ?", store_id).Find(&stock)
+	db.connection.Where("store_id = ? AND variant_id = ?", store_id, variant_id).Find(&stock)
 	return stock
 }
 

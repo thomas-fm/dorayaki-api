@@ -9,12 +9,19 @@ import (
 
 	// "fmt"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	cors "github.com/rs/cors/wrapper/gin"
 
 	// "net/http"
 	"gorm.io/gorm"
 )
+
+// DB_HOST=localhost
+// DB_DRIVER=mysql
+// DB_USER=root
+// DB_PASSWORD=
+// DB_NAME=dorayaki_api
+// DB_PORT=3306
 
 var (
 	// db
@@ -38,9 +45,10 @@ var (
 
 func main() {
 	// Seeding
+	// database.Seed(db)
 	database.Seed(db)
 	r := gin.Default()
-	r.Use(cors.Default())
+	r.Use(cors.AllowAll())
 
 	stockRoutes := r.Group("api/stocks")
 	{
