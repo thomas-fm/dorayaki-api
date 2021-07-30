@@ -29,59 +29,59 @@
 **Toko**
 ----
 
-* GET
-  Deskripsi : mengembalikan semua toko dorayaki
+* GET<br />
+  Deskripsi : mengembalikan semua toko dorayaki<br />
   `/stores/`
 
-* GET
-  Deskripsi : mengembalikan toko dorayaki berdasarkan id
+* GET<br />
+  Deskripsi : mengembalikan toko dorayaki berdasarkan id<br />
   `/stores/:id`
 
-* POST
-  Deskripsi : menambahkan toko dorayaki baru
+* POST<br />
+  Deskripsi : menambahkan toko dorayaki baru<br />
   Param :`name=[string], street=[string], district=[string], province=[string]`
   `/stores/`
 
-* PUT
-  Deskripsi : memperbarui informasi toko dorayaki berdasarkan id
+* PUT<br />
+  Deskripsi : memperbarui informasi toko dorayaki berdasarkan id<br />
   Param : `name=[string], street=[string], district=[string], province=[string]`
   `/stores/:id`
 
-*  DELETE
-  Deskripsi : menghapus toko dorayaki berdasarkan id
+*  DELETE<br />
+  Deskripsi : menghapus toko dorayaki berdasarkan id<br />
   `/stores/:id`
 
 **Stok**
 ----
 
-* GET
-  Deskripsi : mengembalikan semua stok dorayaki pada toko berdasarkan id
+* GET<br />
+  Deskripsi : mengembalikan semua stok dorayaki pada toko berdasarkan id<br />
   `/stocks/:id`
 
-* GET
-  Deskripsi : mengembalikan stok dorayaki dengan id = vId pada toko berdasarkan id
+* GET<br />
+  Deskripsi : mengembalikan stok dorayaki dengan id = vId pada toko berdasarkan id<br />
   `/stocks/:id/variant/:vId`
 
-* POST
-  Deskripsi : menambahkan stok dorayaki baru pada suatu toko
+* POST<br />
+  Deskripsi : menambahkan stok dorayaki baru pada suatu toko<br />
   Param :`store_id=[integer], variant_id=[integer], total=[integer]`
   `/stocks/:id`
 
-* PUT
-  Deskripsi : memperbarui stok dorayaki berdasarkan id toko dan id dorayaki
+* PUT<br />
+  Deskripsi : memperbarui stok dorayaki berdasarkan id toko dan id dorayaki<br />
   Param : `store_id=[integer], variant_id=[integer], total=[integer]`
   `/stocks/:id/variant/:id`
 
-*  DELETE
-  Deskripsi : menghapus stok dorayaki berdasarkan id toko dan id dorayaki
+*  DELETE<br />
+  Deskripsi : menghapus stok dorayaki berdasarkan id toko dan id dorayaki<br />
   `/stocks/:id/variant/:id`
 
 # Cara menjalankan aplikasi
 1. Pastikan terinstall golang versi > 1.16 dan docker versi > 20
 2. Pastikan port `3306` tidak terpakai
-3. Jalankan perintah berikut
-  git clone https://github.com/thomas-fm/dorayaki-api.git
-	cd dorayaki-api
-	docker-compose up --build
+3. Jalankan perintah berikut<br />
+  git clone https://github.com/thomas-fm/dorayaki-api.git<br />
+	cd dorayaki-api<br />
+	docker-compose up --build<br />
 4. API akan berjalan pada `localhost:8080/api`
 

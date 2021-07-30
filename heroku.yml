@@ -1,6 +1,0 @@
-build:
-  docker:
-    web: Dockerfile
-release:
-  command:
-    - docker-compose up
