@@ -1,4 +1,4 @@
-# SeleksiLabpro-Backend
+# Dorayaki Backend
 # Sistem
 1. Golang (backend)
 2. MYSQL (database)
