@@ -4,26 +4,26 @@
 **Variant**
 ----
 
-* GET
-  Deskripsi : mengembalikan semua variant dorayaki
+* GET<br />
+  Deskripsi : mengembalikan semua variant dorayaki<br />
   `/variants/`
 
-* GET
-  Deskripsi : mengembalikan variant dorayaki berdasarkan id
+* GET<br />
+  Deskripsi : mengembalikan variant dorayaki berdasarkan id<br />
   `/variants/:id`
 
-* POST
-  Deskripsi : menambahkan variant dorayaki baru
+* POST<br />
+  Deskripsi : menambahkan variant dorayaki baru<br />
   Param : `flavour=[string], description=[string], img_url=[string]`
   `/variants/`
 
-*  PUT
-  Deskripsi : memperbarui informasi variant dorayaki berdasarkan id
+*  PUT<br />
+  Deskripsi : memperbarui informasi variant dorayaki berdasarkan id<br />
   Param : `flavour=[string], description=[string], img_url=[string]`
   `/variants/:id`
 
-*  DELETE
-  Deskripsi : menghapus  informasi variant dorayaki berdasarkan id
+*  DELETE<br />
+  Deskripsi : menghapus  informasi variant dorayaki berdasarkan id<br />
   `/variants/:id`
 
 **Toko**
@@ -80,8 +80,10 @@
 1. Pastikan terinstall golang versi > 1.16 dan docker versi > 20
 2. Pastikan port `3306` tidak terpakai
 3. Jalankan perintah berikut<br />
-  git clone https://github.com/thomas-fm/dorayaki-api.git<br />
-	cd dorayaki-api<br />
-	docker-compose up --build<br />
+```
+  git clone https://github.com/thomas-fm/dorayaki-api.git
+	cd dorayaki-api
+	docker-compose up --build
+```
 4. API akan berjalan pada `localhost:8080/api`
 
