@@ -88,4 +88,5 @@ cd dorayaki-api
 docker-compose up --build
 ```
 4. API akan berjalan pada `localhost:8080/api`
-
+# Author  
+Thomas Ferdinand Martin - 13519099
